@@ -1,13 +1,16 @@
 def read_input():
     # Read pattern and text from input
-    pattern = input().rstrip()
-    text = input().rstrip()
+    pattern = input()
+    text = input()
     
     return pattern, text
 
 def print_occurrences(output):
-    # Print occurrences in ascending order
-    print(' '.join(map(str, output)))
+    # Print occurrences in ascending order or "No occurrences found" if output is empty
+    if not output:
+        print("No occurrences found")
+    else:
+        print(' '.join(map(str, output)))
 
 def get_occurrences(pattern, text):
     # Implement Rabin-Karp algorithm to find occurrences of pattern in text
@@ -57,5 +60,3 @@ def get_occurrences(pattern, text):
 # This part launches the functions
 if __name__ == '__main__':
     print_occurrences(get_occurrences(*read_input()))
-
-
