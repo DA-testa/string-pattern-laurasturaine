@@ -22,11 +22,15 @@ def get_occurrences(para, teksts):
     parah=hash(para) #nosaka parauga koda vērt
     lhash=hash(teksts[:paral]) #nosaka pirmo apakšvirknē garuma paraugu teksta koda vērtību 
     rez=[] #jauns sarkasts rezultātiem
+
+    
     for x in range(tekstal-paral+1):
         if parah==lhash:
-            if para==teksts[x:x+paral]:
+            if para==teksts[x:x+paral]: #pārbauda vai paraugs sakrīt ar teksta apakšvirkni
                 rez.append(x)
-        if x<tekstal-paral:
+
+
+        if x<tekstal-paral: #ja nav pēdējais teksta garuma elements, noteikt nākamās apakšvirknes koda vērtību
             lhash=hash(teksts[x+1:x+1+paral])
     return rez
 
