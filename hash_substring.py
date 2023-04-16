@@ -2,10 +2,10 @@ def read_input():
     # lasa paraugu un tekstu no inputa
     inputs = input()
     
-    if 'I' in inputs
+    if 'I' in inputs:
         para=input().rstrip() #ievada paraugu
         string=input().rstrip() #ievada tekstu
-    elif 'F'in inputs
+    elif 'F'in inputs:
         with open("tests/06","r") as file:  #atver failu lasīšanai
             para=file.readline().rstrip() #nolasa paraugu un tekstu no faila
             string=file.readline().rstrip()
