@@ -1,32 +1,38 @@
-# python3
-
 def read_input():
-    # this function needs to aquire input both from keyboard and file
-    # as before, use capital i (input from keyboard) and capital f (input from file) to choose which input type will follow
+    # lasa paraugu un tekstu no inputa
+    inputs = input()
     
-    
-    # after input type choice
-    # read two lines 
-    # first line is pattern 
-    # second line is text in which to look for pattern 
-    
-    # return both lines in one return
-    
-    # this is the sample return, notice the rstrip function
-    return (input().rstrip(), input().rstrip())
+    if 'I' in inputs:
+        para=input().rstrip() #ievada paraugu
+        string=input().rstrip() #ievada tekstu
+    elif 'F'in inputs:
+        with open("tests/06","r") as file:  #atver failu lasīšanai
+            para=file.readline().rstrip() #nolasa paraugu un tekstu no faila
+            string=file.readline().rstrip()
+    else:
+        print('wrong input')
+    return (para, string)
 
 def print_occurrences(output):
-    # this function should control output, it doesn't need any return
-    print(' '.join(map(str, output)))
+    print(' '.join(map(str, output))) #printē sarakstu, atdalot katru vērtību ar atstarpi
 
-def get_occurrences(pattern, text):
-    # this function should find the occurances using Rabin Karp alghoritm 
+def get_occurrences(para, teksts):
+    paral=len(para) #nosaka parauga garumu
+    tekstal=len(teksts) #nosaka teksta garumu
+    parah=hash(para) #nosaka parauga koda vērt
+    lhash=hash(teksts[:paral]) #nosaka pirmo apakšvirknē garuma paraugu teksta koda vērtību 
+    rez=[] #jauns sarkasts rezultātiem
 
-    # and return an iterable variable
-    return [0]
+    
+    for x in range(tekstal-paral+1):
+        if parah==lhash:
+            if para==teksts[x:x+paral]: #pārbauda vai paraugs sakrīt ar teksta apakšvirkni
+                rez.append(x)
 
 
-# this part launches the functions
+        if x<tekstal-paral: #ja nav pēdējais teksta garuma elements, noteikt nākamās apakšvirknes koda vērtību
+            lhash=hash(teksts[x+1:x+1+paral])
+    return rez
+
 if __name__ == '__main__':
     print_occurrences(get_occurrences(*read_input()))
-
