@@ -1,62 +1,34 @@
 def read_input():
-    # Read pattern and text from input
-    pattern = input()
-    text = input()
+    # lasa paraugu un tekstu no inputa
+    inputs = input()
     
-    return pattern, text
+    if 'I' in inputs
+        para=input().rstrip() #ievada paraugu
+        string=input().rstrip() #ievada tekstu
+    elif 'F'in inputs
+        with open("tests/06","r") as file:  #atver failu lasīšanai
+            para=file.readline().rstrip() #nolasa paraugu un tekstu no faila
+            string=file.readline().rstrip()
+    else:
+        print('wrong input')
+    return (para, string)
 
 def print_occurrences(output):
-    # Print occurrences in ascending order or "No occurrences found" if output is empty
-    if not output:
-        print("No occurrences found")
-    else:
-        print(' '.join(map(str, output)))
+    print(' '.join(map(str, output))) #printē sarakstu, atdalot katru vērtību ar atstarpi
 
-def get_occurrences(pattern, text):
-    # Implement Rabin-Karp algorithm to find occurrences of pattern in text
+def get_occurrences(para, teksts):
+    paral=len(para) #nosaka parauga garumu
+    tekstal=len(teksts) #nosaka teksta garumu
+    parah=hash(para) #nosaka parauga koda vērt
+    lhash=hash(teksts[:paral]) #nosaka pirmo apakšvirknē garuma paraugu teksta koda vērtību 
+    rez=[] #jauns sarkasts rezultātiem
+    for x in range(tekstal-paral+1):
+        if parah==lhash:
+            if para==teksts[x:x+paral]:
+                rez.append(x)
+        if x<tekstal-paral:
+            lhash=hash(teksts[x+1:x+1+paral])
+    return rez
 
-    def rabin_karp(pattern, text):
-        # Constants for Rabin-Karp algorithm
-        d = 256  # Number of characters in the input alphabet
-        q = 101  # A prime number
-
-        m = len(pattern)
-        n = len(text)
-        p = 0  # Hash value for pattern
-        t = 0  # Hash value for text
-        h = 1
-
-        occurrences = []  # List to store occurrences of the pattern
-
-        # Calculate hash value of pattern and first window of text
-        for i in range(m):
-            p = (d * p + ord(pattern[i])) % q
-            t = (d * t + ord(text[i])) % q
-
-        # Calculate the value of h, which will be used to remove the leftmost character from the hash value
-        for i in range(m - 1):
-            h = (h * d) % q
-
-        # Slide the pattern over the text one by one
-        for i in range(n - m + 1):
-            # Check if hash values of current window of text and pattern match
-            if p == t:
-                # Check if characters in current window and pattern match
-                for j in range(m):
-                    if text[i + j] != pattern[j]:
-                        break
-                else:
-                    occurrences.append(i)  # Add index of occurrence to list
-
-            # Calculate hash value for the next window of text
-            if i < n - m:
-                t = (d * (t - ord(text[i]) * h) + ord(text[i + m])) % q
-
-        return occurrences
-
-    return rabin_karp(pattern, text)
-
-
-# This part launches the functions
 if __name__ == '__main__':
     print_occurrences(get_occurrences(*read_input()))
